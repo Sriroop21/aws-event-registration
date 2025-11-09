@@ -1,0 +1,143 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'Serverless Event Registration System with AI-Powered Networking.
+
+  '
+Globals:
+  Function:
+    Runtime: python3.13
+    Timeout: 30
+    MemorySize: 128
+    Environment:
+      Variables:
+        EVENTS_TABLE: Events
+        REGISTRATIONS_TABLE: Registrations
+        PROFILES_TABLE: MatchingProfiles
+Resources:
+  EventApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowOrigins:
+        - https://d2eg0n1tt6gn3n.cloudfront.net
+        AllowHeaders:
+        - Content-Type
+        AllowMethods:
+        - GET
+        - POST
+        - OPTIONS
+  RegisterUserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: RegisterUserFunction
+      Handler: app.lambda_handler
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName: Registrations
+      - SESBulkTemplatedCrudPolicy:
+          IdentityName: sriroop123@gmail.com
+      Events:
+        ApiEvent:
+          Type: HttpApi
+          Properties:
+            Path: /register
+            Method: post
+            ApiId:
+              Ref: EventApi
+    Metadata:
+      SamResourceId: RegisterUserFunction
+  GetEventRecommendationsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: GetEventRecommendationsFunction
+      Handler: app.lambda_handler
+      Policies:
+      - DynamoDBReadPolicy:
+          TableName: Events
+      - DynamoDBReadPolicy:
+          TableName: Registrations
+      Events:
+        ApiEvent:
+          Type: HttpApi
+          Properties:
+            Path: /recommendations
+            Method: get
+            ApiId:
+              Ref: EventApi
+    Metadata:
+      SamResourceId: GetEventRecommendationsFunction
+  EventChatbotFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: EventChatbotFunction
+      Handler: app.lambda_handler
+      Policies:
+      - DynamoDBReadPolicy:
+          TableName: Events
+      Events:
+        ApiEvent:
+          Type: HttpApi
+          Properties:
+            Path: /chat
+            Method: post
+            ApiId:
+              Ref: EventApi
+    Metadata:
+      SamResourceId: EventChatbotFunction
+  MatchMakerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: MatchMakerFunction
+      Handler: app.lambda_handler
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName: MatchingProfiles
+      Events:
+        ApiEvent:
+          Type: HttpApi
+          Properties:
+            Path: /find-matches
+            Method: post
+            ApiId:
+              Ref: EventApi
+    Metadata:
+      SamResourceId: MatchMakerFunction
+  GetDashboardDataFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: GetDashboardDataFunction
+      Handler: app.lambda_handler
+      Policies:
+      - DynamoDBReadPolicy:
+          TableName: Events
+      - DynamoDBReadPolicy:
+          TableName: Registrations
+      - DynamoDBReadPolicy:
+          TableName: MatchingProfiles
+      Events:
+        ApiEvent:
+          Type: HttpApi
+          Properties:
+            Path: /dashboard
+            Method: get
+            ApiId:
+              Ref: EventApi
+    Metadata:
+      SamResourceId: GetDashboardDataFunction
+  SendEventRemindersFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: SendEventRemindersFunction
+      Handler: app.lambda_handler
+      Policies:
+      - DynamoDBReadPolicy:
+          TableName: Registrations
+      - SESBulkTemplatedCrudPolicy:
+          IdentityName: sriroop123@gmail.com
+      Events:
+        ScheduledEvent:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 9 * * ? *)
+    Metadata:
+      SamResourceId: SendEventRemindersFunction
