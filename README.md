@@ -253,7 +253,7 @@ Before deploying, verify your sender email address:
 1. Go to [Amazon SES Console](https://console.aws.amazon.com/ses/)
 2. Navigate to **Verified Identities**
 3. Click **Create Identity** → Select **Email address**
-4. Enter your email (e.g., `sriroop123@gmail.com`)
+4. Enter your email (e.g., `sriroop@gmail.com`)
 5. Check your inbox and click the verification link
 
 #### Step 2: Update SAM Template
@@ -263,7 +263,7 @@ Edit `backend/template.yaml` and update the SES identity:
 ```yaml
 Policies:
   - SESBulkTemplatedCrudPolicy: 
-      IdentityName: "sriroop123@gmail.com"  # ← Make sure this is verified
+      IdentityName: "your-verified-email@gmail.com"  # ← Make sure this is verified
 ```
 
 #### Step 3: Build the SAM Application
