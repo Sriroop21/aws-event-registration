@@ -225,8 +225,8 @@ Before you begin, ensure you have:
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR-USERNAME/EventDNA.git
-cd EventDNA
+git clone https://github.com/Sriroop21/aws-event-registration.git
+cd aws-event-registration
 
 # Deploy backend (see full guide below)
 cd backend
