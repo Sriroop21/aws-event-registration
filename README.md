@@ -15,29 +15,31 @@
 
 ---
 
-##  Table of Contents
+## Table of Contents
 
-- [About The Project](#-about-the-project)
-- [Key Features](#-key-features)
-- [Architecture](#️-architecture)
-- [Technology Stack](#️-technology-stack)
-- [Getting Started](#-getting-started)
-- [Deployment Guide](#-deployment-guide)
-- [API Documentation](#-api-documentation)
-- [Screenshots](#-screenshots)
-- [Cost Analysis](#-cost-analysis)
-- [Author](#-author)
-- [License](#-license)
+- [About The Project](#about-the-project)
+- [Key Features](#key-features)
+- [Architecture](#architecture)
+- [Technology Stack](#technology-stack)
+- [Getting Started](#getting-started)
+- [Deployment Guide](#deployment-guide)
+- [API Documentation](#api-documentation)
+- [Screenshots](#screenshots)
+- [Testing](#testing)
+- [License](#license)
+- [Links](#links)
+- [Author](#author)
 
 ---
 
-##  About The Project
+## About The Project
 
 EventDNA is a **production-ready, intelligent event management platform** built entirely on **AWS serverless architecture**. It was developed to solve two critical problems in modern event management:
 
 ### Problems Solved
 
 **Traditional Event Platforms Face:**
+
 - **High operational costs:** Paying for idle servers 24/7
 - **Poor scalability:** Crashes during ticket launches
 - **High latency** for global audiences
@@ -45,6 +47,7 @@ EventDNA is a **production-ready, intelligent event management platform** built 
 - **Complex maintenance:** Constant server patching and updates
 
 **EventDNA Solution:**
+
 - **Pay-as-you-go pricing:** Scales to $0 when idle
 - **Infinite auto-scaling:** Handles 10 or 10,000 users seamlessly
 - **<500ms API response time** with a global CDN
@@ -53,20 +56,22 @@ EventDNA is a **production-ready, intelligent event management platform** built 
 
 ---
 
-##  Key Features
+## Key Features
 
-###  1. AI "DNA" Matching System (Flagship Feature)
+### 1. AI "DNA" Matching System (Flagship Feature)
 
 A proprietary matching algorithm that analyzes comprehensive user profiles to create meaningful connections:
 
 **Multi-vector compatibility scoring:**
--  **Shared Interests** (0-30 points)
--  **Mentorship Matching** (0-25 points)
--  **Goal Alignment** (0-25 points)
--  **Looking For Match** (0-15 points)
--  **Organization Diversity Bonus** (encourages new connections)
+
+- **Shared Interests** (0-30 points)
+- **Mentorship Matching** (0-25 points)
+- **Goal Alignment** (0-25 points)
+- **Looking For Match** (0-15 points)
+- **Organization Diversity Bonus** (encourages new connections)
 
 **Features:**
+
 - Calculates compatibility scores between attendees
 - Generates personalized "icebreaker" conversation starters
 - Provides detailed match reasoning
@@ -75,7 +80,7 @@ A proprietary matching algorithm that analyzes comprehensive user profiles to cr
 
 ---
 
-###  2. AI Event Recommender
+### 2. AI Event Recommender
 
 A hybrid recommendation engine combining 4 algorithms:
 
@@ -88,30 +93,30 @@ A hybrid recommendation engine combining 4 algorithms:
 
 ---
 
-###  3. NLP-Based AI Chatbot
+### 3. NLP-Based AI Chatbot
 
 A context-aware chatbot with intelligent intent recognition for 24/7 automated support:
 
--  Natural language understanding
--  Event-specific activity descriptions
--  Fuzzy string matching for misspellings
+- Natural language understanding
+- Event-specific activity descriptions
+- Fuzzy string matching for misspellings
 
 ---
 
-###  4. Real-Time Admin Dashboard
+### 4. Real-Time Admin Dashboard
 
 A comprehensive analytics panel for event organizers to track:
 
--  Total registrations and conversion rates
--  User engagement metrics
--  Event capacity monitoring
--  Real-time attendance tracking
+- Total registrations and conversion rates
+- User engagement metrics
+- Event capacity monitoring
+- Real-time attendance tracking
 
 ![Admin Dashboard](docs/images/dashboard.png)
 
 ---
 
-##  Architecture
+## Architecture
 
 ### System Architecture Diagram
 
@@ -148,7 +153,7 @@ A comprehensive analytics panel for event organizers to track:
 ┌─────────────────────────────────────────────────────────────┐
 │                   COMPUTE LAYER (AWS Lambda)                 │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐         │
-│  │  Register   │  │ Chatbot     │  │MatchMaker   │         │
+│  │  Register   │  │ Chatbot     │  │ MatchMaker   │         │
 │  │  Function   │  │ Function    │  │ Function    │         │
 │  └─────────────┘  └─────────────┘  └─────────────┘         │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐         │
@@ -169,7 +174,7 @@ A comprehensive analytics panel for event organizers to track:
 └─────────────────────────────────────────────────────────────┘
 ```
 
-###  Request Flow
+### Request Flow
 
 1. **User Request:** Hits **CloudFront** (nearest edge location)
 2. **API Call:** **API Gateway** validates and routes the request
@@ -179,7 +184,7 @@ A comprehensive analytics panel for event organizers to track:
 
 ---
 
-##  Technology Stack
+## Technology Stack
 
 ### Cloud Infrastructure (AWS)
 
@@ -203,18 +208,18 @@ A comprehensive analytics panel for event organizers to track:
 
 ---
 
-##  Getting Started
+## Getting Started
 
 ### Prerequisites
 
 Before you begin, ensure you have:
 
--  **AWS Account** ([Create one here](https://aws.amazon.com/free/))
--  **AWS CLI** installed and configured (`aws configure`)
--  **AWS SAM CLI** installed (`sam --version`)
--  **Node.js & npm** (for frontend)
--  **Python 3.13** (for Lambda functions)
--  **Docker** (required by SAM for local testing)
+- **AWS Account** ([Create one here](https://aws.amazon.com/free/))
+- **AWS CLI** installed and configured (`aws configure`)
+- **AWS SAM CLI** installed (`sam --version`)
+- **Node.js & npm** (for frontend)
+- **Python 3.13** (for Lambda functions)
+- **Docker** (required by SAM for local testing)
 
 ### Quick Start
 
@@ -237,7 +242,7 @@ npm run build
 
 ---
 
-##  Deployment Guide
+## Deployment Guide
 
 ### Part 1: Backend Deployment (AWS SAM)
 
@@ -282,6 +287,7 @@ sam deploy --guided
 ```
 
 You'll be prompted with:
+
 - **Stack Name:** `eventdna-production`
 - **AWS Region:** `eu-north-1` (or your preferred region)
 - **Confirm changes before deploy:** `Y`
@@ -350,6 +356,7 @@ EventApi:
 ```
 
 Redeploy the backend:
+
 ```bash
 cd backend
 sam build && sam deploy
@@ -359,13 +366,14 @@ sam build && sam deploy
 
 Go to your CloudFront distribution, click the **Invalidations** tab, and create a new invalidation for the path `/*`.
 
-###  Deployment Complete!
+### Deployment Complete!
 
 ---
 
-## 📡 API Documentation
+## API Documentation
 
 ### Base URL
+
 ```
 https://<YOUR-API-ID>.execute-api.eu-north-1.amazonaws.com
 ```
@@ -373,6 +381,7 @@ https://<YOUR-API-ID>.execute-api.eu-north-1.amazonaws.com
 ### Endpoints
 
 #### 1. Register User
+
 ```http
 POST /register
 Content-Type: application/json
@@ -391,6 +400,7 @@ Response: 200 OK
 ```
 
 #### 2. Get Event Recommendations
+
 ```http
 GET /recommendations
 
@@ -407,6 +417,7 @@ Response: 200 OK
 ```
 
 #### 3. Find Matches (DNA System)
+
 ```http
 POST /find-matches
 Content-Type: application/json
@@ -438,6 +449,7 @@ Response: 200 OK
 ```
 
 #### 4. AI Chatbot
+
 ```http
 POST /chat
 Content-Type: application/json
@@ -453,6 +465,7 @@ Response: 200 OK
 ```
 
 #### 5. Admin Dashboard
+
 ```http
 GET /dashboard
 
@@ -466,42 +479,46 @@ Response: 200 OK
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 ### Main Portal
+
 ![Main Portal](docs/images/portal.png)
 *Event browsing and registration interface*
 
 ---
 
 ### AI Recommendations
+
 ![AI Recommendations](docs/images/recommendations.png)
 *Personalized event suggestions based on hybrid algorithm*
 
 ---
 
 ### AI Matchmaking - Data Collection
+
 **Step 1: Skills & Interests**
+
 ![Profile Form Step 1](docs/images/profile-form-1.png)
 
 **Step 2: Goals & Experience**
+
 ![Profile Form Step 2](docs/images/profile-form-2.png)
 
 **Step 3: Looking For**
+
 ![Profile Form Step 3](docs/images/profile-form-3.png)
 
 ---
 
 ### AI Matchmaking - Final Results
+
 ![Match Results](docs/images/match-results.png)
 *Compatibility scores, match reasons, and personalized icebreakers*
 
 ---
 
-
----
-
-##  Testing
+## Testing
 
 ### Local Testing
 
@@ -521,13 +538,13 @@ Common issues (and their solutions) like **CORS Errors** and **IAM AccessDeniedE
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-##  Links
+## Links
 
 - **Live Application:** [https://d2eg0n1tt6gn3n.cloudfront.net/](https://d2eg0n1tt6gn3n.cloudfront.net/)
 - **API Endpoint:** `https://6q1uzeiewc.execute-api.eu-north-1.amazonaws.com`
@@ -535,3 +552,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
+## Author
+
+**Byna Sriroop**
